@@ -215,6 +215,16 @@
     }
     .group-hero-top { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
     .group-hero-title { font-size: 19px; font-weight: 800; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .hero-share-btn {
+      margin-left: auto;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.3);
+      color: #fff;
+      box-shadow: none;
+      width: auto;
+      min-height: 34px;
+      padding: 0 12px;
+    }
 
     .bubbles { display: flex; gap: 12px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
     .bubbles::-webkit-scrollbar { display: none; }
@@ -418,6 +428,19 @@
       margin-top: 14px; padding: 12px; background: var(--green-light);
       border-radius: var(--r-sm); font-size: 14px; color: var(--green-dark); text-align: center;
     }
+    .split-member .share-input {
+      width: 92px;
+      min-height: 38px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg);
+      color: var(--text);
+      padding: 0 10px;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: right;
+    }
+    .split-member .share-input:focus { outline: none; border-color: var(--green); }
 
     /* step 6: confirm */
     .confirm-body { padding-bottom: 16px; }
@@ -469,13 +492,68 @@
       background: var(--card); border-radius: var(--r-sm);
       border: 1px solid var(--border); margin-bottom: 8px;
     }
-    .mtag .mname { flex: 1; min-width: 0; font-size: 15px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
+    .mtag .mtext { flex: 1; min-width: 0; }
+    .mtag .mname { font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; }
+    .mtag .mjoin { font-size: 12px; color: var(--muted); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .mtag .mjoin.joined { color: var(--green-dark); font-weight: 700; }
     .mtag .mrm {
       width: 28px; height: 28px; border: none; background: none;
       color: var(--muted); font-size: 20px; cursor: pointer;
       display: flex; align-items: center; justify-content: center; border-radius: 50%;
     }
     .mtag .mrm:active { background: #f0f0f0; color: var(--red); }
+    .claim-manager {
+      margin-top: 12px;
+      padding: 12px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+    }
+    .claim-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(140px, .9fr);
+      gap: 10px;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .claim-row:last-child { border-bottom: 0; padding-bottom: 0; }
+    .claim-account {
+      min-width: 0;
+    }
+    .claim-name {
+      font-size: 13px;
+      font-weight: 800;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .claim-meta {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-top: 2px;
+    }
+    .claim-select {
+      width: 100%;
+      min-height: 42px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      padding: 0 10px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .claim-summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
 
     .fx-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .fx-item label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
@@ -2059,6 +2137,60 @@
       border-radius: 999px;
       font-size: 12px;
     }
+    .join-picker-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: rgba(0,0,0,.36);
+    }
+    .join-picker {
+      width: min(420px, 100%);
+      max-height: min(680px, 86vh);
+      overflow: auto;
+      padding: 18px;
+      border-radius: var(--r);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+    .join-picker-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .join-picker-sub {
+      margin-top: 6px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    .join-name-list {
+      display: grid;
+      gap: 8px;
+      margin: 16px 0;
+    }
+    .join-name-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: left;
+    }
+    .join-name-btn:active {
+      border-color: var(--green);
+      background: var(--green-light);
+    }
 
     .settle-shell {
       display: grid;
@@ -2636,6 +2768,31 @@
       border-color: rgba(28,194,159,.35);
       color: var(--green-dark);
     }
+    .mj-item-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .mj-item-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .mj-item-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .mj-item-count {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
     .mj-row {
       display: grid;
       grid-template-columns: minmax(0,1fr) auto;
@@ -2981,6 +3138,7 @@
         <button class="btn btn-green btn-sm" id="add-mbr-btn">Add</button>
       </div>
       <div id="members-list"></div>
+      <div id="member-claim-manager"></div>
 
       <div class="mt20"></div>
       <div class="sec-label">Base Currency</div>
@@ -3023,6 +3181,7 @@
         <div class="group-hero-top">
           <div class="group-hero-icon" id="g-icon">✈️</div>
           <div class="live-chip" id="g-live-chip"><span></span> Live</div>
+          <button class="btn btn-ghost btn-sm hero-share-btn js-share" id="g-hero-share" type="button">Share</button>
         </div>
         <div class="group-hero-copy">
           <div class="group-hero-title" id="g-title"></div>
@@ -3184,6 +3343,21 @@
   const MAHJONG_EMOJIS = ['🀄','🎲','🏮','💰','🧧','♠️','♦️','♣️','♥️'];
   const CCYS = ['CNY','SGD','USD','MYR','HKD'];
   const SYM = { CNY:'¥', SGD:'S$', USD:'$', MYR:'RM', HKD:'HK$' };
+  const HOUSEMATE_CATS = [
+    { n:'Utilities', i:'💡' },
+    { n:'Electricity', i:'⚡' },
+    { n:'Water', i:'🚿' },
+    { n:'Internet', i:'🌐' },
+    { n:'Rent', i:'🏠' },
+    { n:'Groceries', i:'🛒' },
+    { n:'Household', i:'🧽' },
+    { n:'Subscription', i:'🔁' },
+    { n:'Repairs', i:'🔧' },
+    { n:'Cleaner', i:'🧹' },
+    { n:'Supplies', i:'📦' },
+    { n:'Food', i:'🍜' },
+    { n:'Other', i:'➕' },
+  ];
   const DEFAULT_BASE_CURRENCY = 'SGD';
   const MAIN_CURRENCY = 'SGD';
   const DEFAULT_FX_RATES = { SGD:5.40, USD:7.25, MYR:1.60, HKD:0.93 };
@@ -3221,7 +3395,7 @@
       label:'General Splitter',
       shortLabel:'General',
       homeTitle:'General Splits',
-      launcherDesc:'Split everyday shared costs, bills, meals, and group spending.',
+      launcherDesc:'Split utilities, rent, groceries, subscriptions, and housemate bills.',
       homeEmpty:'No general splits yet.',
       itemName:'general split',
       itemPlural:'general splits',
@@ -3236,7 +3410,7 @@
       activeTab:'Active',
       pastTab:'Past',
       expensesTab:'Expenses',
-      expenseEmpty:'No expenses yet. Tap + to add the first shared cost.',
+      expenseEmpty:'No bills yet. Tap + to add utilities, rent, groceries, or another shared household cost.',
       addLabel:'＋ Add expense',
     },
     mahjong: {
@@ -3290,16 +3464,18 @@
     Other:['Other expense'],
   };
   const GENERAL_SUGGESTS = {
-    Food:['Breakfast','Lunch','Dinner','Takeout'],
-    Drinks:['Coffee','Tea','Drinks','Bar tab'],
-    Bills:['Utilities','Electricity','Water','Internet'],
-    Groceries:['Supermarket','Household supplies','Snacks'],
-    Rent:['Rent','Deposit','Room share'],
-    Transport:['Fuel','Parking','Ride share','Bus fare'],
-    Shopping:['Household item','Shared purchase','Supplies'],
-    Subscription:['Streaming','Software','Membership'],
-    Medical:['Pharmacy','Clinic','Insurance'],
-    Gift:['Birthday gift','Farewell gift','Shared present'],
+    Utilities:['Monthly utilities','Utilities bill','Shared household bill'],
+    Electricity:['Electricity bill','SP electricity','Power bill'],
+    Water:['Water bill','Water usage','Utilities water'],
+    Internet:['Wi-Fi bill','Broadband','Router subscription'],
+    Rent:['Rent','Room share','Deposit'],
+    Groceries:['Supermarket','Shared groceries','Household groceries'],
+    Household:['Toilet paper','Cleaning supplies','Kitchen supplies'],
+    Subscription:['Streaming','Software','Shared membership'],
+    Repairs:['Plumbing repair','Aircon servicing','Light replacement'],
+    Cleaner:['Cleaner fee','House cleaning','Deep cleaning'],
+    Supplies:['Laundry supplies','Shared purchase','Home supplies'],
+    Food:['Takeout','Shared meal','Dinner at home'],
     Other:['Other cost'],
   };
 
@@ -3317,6 +3493,7 @@
   let copyBillCurrency = '';
   let pendingJoinCode = null;
   let authMode = 'signin';
+  let authRecoveryActive = false;
   let appPrefs = { theme:'light', font:'splittrip', contrast:'high', density:'comfortable', accent:'lime', baseCurrency:DEFAULT_BASE_CURRENCY };
   let profileEditing = false;
   let homeStatusFilter = 'active';
@@ -3520,6 +3697,7 @@
   }
   function clearAuth() {
     authSession = null;
+    authRecoveryActive = false;
     try { localStorage.removeItem('splittrip_auth_v1'); } catch(e){}
   }
   function loadProfile() {
@@ -3635,7 +3813,7 @@
   }
 
   function currentCategories() {
-    return currentApp === 'general' ? GENERAL_CATS : TRIP_CATS;
+    return currentApp === 'general' ? HOUSEMATE_CATS : TRIP_CATS;
   }
 
   function currentSuggests() {
@@ -3816,12 +3994,36 @@
     return out;
   }
 
+  function expenseShares(e) {
+    if (e?.splitShares && typeof e.splitShares === 'object') return e.splitShares;
+    return splitEvenly(e?.cnyFen || 0, e?.splitAmong || []);
+  }
+
+  function buildCustomShares(totalMinor, ccy, fx, members, fixedInputs={}) {
+    const selected = [...new Set(members || [])];
+    const fixedMinor = {};
+    selected.forEach(name => { fixedMinor[name] = parseAmt(fixedInputs[name] || ''); });
+    const flexible = selected.filter(name => !fixedMinor[name]);
+    const fixedTotalMinor = Object.values(fixedMinor).reduce((sum,v)=>sum+v,0);
+    if (fixedTotalMinor > totalMinor) throw new Error('The person-by-person amounts are more than the total bill.');
+    const remainingMinor = totalMinor - fixedTotalMinor;
+    if (remainingMinor > 0 && !flexible.length) throw new Error('The bill still has money left. Put 0 for at least one person to split the remaining amount.');
+    const remainderShares = splitEvenly(toCny(remainingMinor, ccy, fx), flexible);
+    const out = {};
+    selected.forEach(name => {
+      out[name] = toCny(fixedMinor[name] || 0, ccy, fx) + (remainderShares[name] || 0);
+    });
+    const delta = toCny(totalMinor, ccy, fx) - Object.values(out).reduce((sum,v)=>sum+v,0);
+    if (delta && selected.length) out[selected[0]] = (out[selected[0]] || 0) + delta;
+    return out;
+  }
+
   function balances(group) {
     const net = {};
     (group.members||[]).forEach(m => net[m]=0);
     activeExpenses(group).forEach(e => {
       net[e.paidBy] = (net[e.paidBy]||0) + e.cnyFen;
-      const shares = splitEvenly(e.cnyFen, e.splitAmong);
+      const shares = expenseShares(e);
       e.splitAmong.forEach(m => { net[m] = (net[m]||0) - (shares[m]||0); });
     });
     (group.payments||[]).forEach(p => {
@@ -3885,10 +4087,11 @@
     const hash = window.location.hash ? window.location.hash.slice(1) : '';
     if (!hash) return false;
     const params = new URLSearchParams(hash);
+    const flowType = params.get('type') || '';
     const error = params.get('error_description') || params.get('error');
     if (error) {
       cleanAuthUrl();
-      alert(`Social sign in failed:\n${error}`);
+      alert(`Authentication failed:\n${error}`);
       return false;
     }
     const accessToken = params.get('access_token');
@@ -3913,12 +4116,16 @@
       authSession.user = data?.user || data;
       applyAuthProfile();
       saveAuth();
+      if (flowType === 'recovery') {
+        authRecoveryActive = true;
+        authMode = 'update-password';
+      }
       cleanAuthUrl();
       return true;
     } catch(err) {
       clearAuth();
       cleanAuthUrl();
-      alert(`Social sign in completed, but the account could not be loaded:\n${err.message}`);
+      alert(`Authentication completed, but the account could not be loaded:\n${err.message}`);
       return false;
     }
   }
@@ -4015,6 +4222,7 @@
       trip_id: g.remoteTripId || g.id,
       user_id: authSession?.user?.id,
       display_name: profile.name || authSession?.user?.email?.split('@')[0] || 'Member',
+      account_email: authSession?.user?.email || null,
       role: isGroupOwner(g) ? 'owner' : 'member',
     };
   }
@@ -4024,6 +4232,7 @@
       id: `${g.remoteTripId || g.id}:${name.toLowerCase()}`,
       trip_id: g.remoteTripId || g.id,
       name,
+      claimed_by_user: name === g.iAm ? authSession?.user?.id || null : undefined,
       device_id: name === profile.name ? profile.id : null,
       created_by_user: authSession?.user?.id || null,
     }));
@@ -4041,6 +4250,7 @@
       cny_fen: e.cnyFen,
       paid_by: e.paidBy,
       split_among: e.splitAmong || [],
+      split_shares: e.splitShares || null,
       expense_date: e.date || today(),
       created_by_device: e.createdByDevice || profile.id,
       created_by_user: e.createdByUser || authSession?.user?.id || null,
@@ -4061,6 +4271,7 @@
       cnyFen: r.cny_fen,
       paidBy: r.paid_by,
       splitAmong: Array.isArray(r.split_among) ? r.split_among : [],
+      splitShares: r.split_shares || null,
       date: r.expense_date || today(),
       createdByDevice: r.created_by_device,
       inputtedBy: r.inputted_by || null,
@@ -4102,7 +4313,7 @@
     const fromOwesRows = activeExpenses(g)
       .filter(e => e.paidBy === tx.to && e.splitAmong.includes(tx.from))
       .map(e => {
-        const shares = splitEvenly(e.cnyFen,e.splitAmong);
+        const shares = expenseShares(e);
         return {
           title: e.description || e.category || 'Expense',
           date: e.date || today(),
@@ -4115,7 +4326,7 @@
     const toOwesRows = activeExpenses(g)
       .filter(e => e.paidBy === tx.from && e.splitAmong.includes(tx.to))
       .map(e => {
-        const shares = splitEvenly(e.cnyFen,e.splitAmong);
+        const shares = expenseShares(e);
         return {
           title: e.description || e.category || 'Expense',
           date: e.date || today(),
@@ -4202,7 +4413,7 @@
     }
 
     activeExpenses(g).forEach(e => {
-      const shares = splitEvenly(e.cnyFen,e.splitAmong || []);
+      const shares = expenseShares(e);
       (e.splitAmong || []).forEach(name => {
         if (name !== e.paidBy) addDebt(name,e.paidBy,shares[name] || 0);
       });
@@ -4460,6 +4671,21 @@
           <div class="auth-sub">Add your Supabase URL and anon key to enable private shared ${esc(itemPlural)}.</div>
         </div>`;
     }
+    if (authMode === 'update-password' && authRecoveryActive) {
+      return `
+        <div class="auth-card st-auth-card">
+          <div class="auth-title">Choose a new password.</div>
+          <div class="auth-sub">Enter a new password for ${esc(authSession?.user?.email || 'your account')}.</div>
+          <div class="auth-grid">
+            <input type="password" class="field" id="auth-new-password" placeholder="New password">
+            <input type="password" class="field" id="auth-confirm-new-password" placeholder="Confirm new password">
+          </div>
+          <div class="auth-actions">
+            <button class="btn btn-green" id="auth-update-password">Update password</button>
+            <button class="btn btn-ghost" id="auth-cancel-reset">Cancel</button>
+          </div>
+        </div>`;
+    }
     if (isSignedIn()) {
       return '';
     }
@@ -4481,6 +4707,20 @@
           ${authProviderHTML()}
         </div>`;
     }
+    if (authMode === 'recover') {
+      return `
+        <div class="auth-card st-auth-card">
+          <div class="auth-title">Reset your password.</div>
+          <div class="auth-sub">Enter the email for your account and we will send a reset link.</div>
+          <div class="auth-grid">
+            <input type="email" class="field" id="auth-reset-email" placeholder="Email">
+          </div>
+          <div class="auth-actions">
+            <button class="btn btn-green" id="auth-send-reset">Send reset link</button>
+            <button class="btn btn-ghost" id="auth-show-signin">Sign in</button>
+          </div>
+        </div>`;
+    }
     return `
       <div class="auth-card st-auth-card">
         <div class="auth-title">Money,<br>after the fact.</div>
@@ -4493,6 +4733,7 @@
           <button class="btn btn-green" id="auth-signin">Sign in →</button>
           <button class="btn btn-ghost" id="auth-show-signup">Create account</button>
         </div>
+        <button class="btn btn-ghost" id="auth-show-recover" type="button">Forgot password?</button>
         ${authProviderHTML()}
       </div>`;
   }
@@ -4500,14 +4741,25 @@
   function bindAuth() {
     document.getElementById('auth-signin')?.addEventListener('click', signIn);
     document.getElementById('auth-signup')?.addEventListener('click', signUp);
+    document.getElementById('auth-send-reset')?.addEventListener('click', requestPasswordReset);
+    document.getElementById('auth-update-password')?.addEventListener('click', updateRecoveredPassword);
     document.getElementById('auth-show-signup')?.addEventListener('click', () => setAuthMode('signup'));
     document.getElementById('auth-show-signin')?.addEventListener('click', () => setAuthMode('signin'));
+    document.getElementById('auth-show-recover')?.addEventListener('click', () => setAuthMode('recover'));
+    document.getElementById('auth-cancel-reset')?.addEventListener('click', () => {
+      authRecoveryActive = false;
+      setAuthMode('signin');
+    });
     document.getElementById('auth-signout')?.addEventListener('click', signOut);
     document.querySelectorAll('#auth-email,#auth-password,#auth-confirm-password,#auth-name').forEach(el => {
       el.addEventListener('keydown', e => { if (e.key === 'Enter') signUp(); });
     });
     document.querySelectorAll('#auth-username,#auth-signin-password').forEach(el => {
       el.addEventListener('keydown', e => { if (e.key === 'Enter') signIn(); });
+    });
+    document.getElementById('auth-reset-email')?.addEventListener('keydown', e => { if (e.key === 'Enter') requestPasswordReset(); });
+    document.querySelectorAll('#auth-new-password,#auth-confirm-new-password').forEach(el => {
+      el.addEventListener('keydown', e => { if (e.key === 'Enter') updateRecoveredPassword(); });
     });
     document.querySelectorAll('[data-auth-provider]').forEach(el => {
       el.addEventListener('click', () => signInWithProvider(el.dataset.authProvider));
@@ -4574,6 +4826,21 @@
     return { username, password };
   }
 
+  function resetPasswordFormValues() {
+    const email = (document.getElementById('auth-reset-email')?.value || '').trim();
+    if (!email) throw new Error('Enter your account email.');
+    return { email };
+  }
+
+  function updatePasswordFormValues() {
+    const password = document.getElementById('auth-new-password')?.value || '';
+    const confirmPassword = document.getElementById('auth-confirm-new-password')?.value || '';
+    if (!password) throw new Error('Enter a new password.');
+    if (password.length < 6) throw new Error('Password must be at least 6 characters.');
+    if (password !== confirmPassword) throw new Error('Passwords do not match.');
+    return { password };
+  }
+
   async function signUp() {
     try {
       const { name, email, password } = signUpFormValues();
@@ -4583,6 +4850,7 @@
       });
       if (data?.access_token) {
         authSession = data;
+        authRecoveryActive = false;
         applyAuthProfile();
         saveAuth();
         await loadMyOnlineTrips(true);
@@ -4623,6 +4891,7 @@
         body:{ email:username, password },
       });
       authSession = data;
+      authRecoveryActive = false;
       applyAuthProfile();
       saveAuth();
       await loadMyOnlineTrips(true);
@@ -4633,6 +4902,43 @@
       renderHome();
     } catch(err) {
       alert(`Sign in failed:\n${err.message}`);
+    }
+  }
+
+  async function requestPasswordReset() {
+    try {
+      const { email } = resetPasswordFormValues();
+      const redirectTo = encodeURIComponent(authRedirectUrl());
+      await authRequest(`recover?redirect_to=${redirectTo}`, {
+        method:'POST',
+        body:{ email },
+      });
+      authMode = 'signin';
+      renderHome();
+      alert('Password reset email sent. Open the link in that email to choose a new password.');
+    } catch(err) {
+      alert(`Password reset failed:\n${err.message}`);
+    }
+  }
+
+  async function updateRecoveredPassword() {
+    try {
+      if (!isSignedIn()) throw new Error('Open the password reset link from your email first.');
+      const { password } = updatePasswordFormValues();
+      const data = await authRequest('user', {
+        method:'PUT',
+        body:{ password },
+      });
+      if (data?.user) authSession.user = data.user;
+      else if (data?.id) authSession.user = data;
+      authRecoveryActive = false;
+      authMode = 'signin';
+      saveAuth();
+      await loadMyOnlineTrips(true);
+      renderHome();
+      alert('Password updated. You are signed in with the new password.');
+    } catch(err) {
+      alert(`Password update failed:\n${err.message}`);
     }
   }
 
@@ -4812,6 +5118,7 @@
       cgState = {
         editId, kind:groupKind(grp), emoji:grp.emoji||'🌏',
         members:[...(grp.members||[])],
+        memberClaims:[...(grp.memberClaims||[])],
         baseCcy:MAIN_CURRENCY,
         fx:{...DEFAULT_FX_RATES, ...grp.fxRates},
         iAm:grp.iAm||null,
@@ -4823,7 +5130,7 @@
     } else {
       const t = appConfig(createKind);
       cgState = {
-        editId:null, kind:createKind, emoji:t.emoji, members:[],
+        editId:null, kind:createKind, emoji:t.emoji, members:[], memberClaims:[],
         baseCcy:MAIN_CURRENCY, fx:{...DEFAULT_FX_RATES}, iAm:profile.name||null, coverPhoto:null, coverUpload:null
       };
       document.getElementById('cg-title').textContent=t.createTitle;
@@ -4868,6 +5175,7 @@
     setCoverPreview();
 
     renderMtags();
+    renderClaimManager();
 
     // base currency
     const bcp = document.getElementById('base-ccy-picker');
@@ -4898,19 +5206,87 @@
   function renderMtags() {
     const list=document.getElementById('members-list');
     list.innerHTML='';
+    const g = cgState.editId ? groups.find(x=>x.id===cgState.editId) : null;
+    const claims = g?.memberClaims || [];
+    const accounts = new Map((g?.authMembers || []).map(m => [m.user_id, m]));
     cgState.members.forEach((name,idx)=>{
+      const claim = claims.find(m => (m.name || '').toLowerCase() === name.toLowerCase() && m.claimed_by_user);
+      const account = claim ? accounts.get(claim.claimed_by_user) : null;
       const tag=document.createElement('div');
       tag.className='mtag';
       tag.appendChild(av(name,'av-sm'));
+      const text=document.createElement('div'); text.className='mtext';
       const n=document.createElement('div'); n.className='mname'; n.textContent=name;
+      text.appendChild(n);
+      if (g?.remoteTripId) {
+        const joined=document.createElement('div');
+        joined.className='mjoin'+(account?' joined':'');
+        joined.textContent=account ? `Joined: ${accountLabel(account)}` : 'Not joined yet';
+        text.appendChild(joined);
+      }
       const rm=document.createElement('button'); rm.className='mrm'; rm.textContent='×';
       rm.addEventListener('click', ()=>{
         cgState.members.splice(idx,1);
         if (cgState.iAm===name) cgState.iAm=cgState.members[0]||null;
-        renderMtags(); renderIam();
+        renderMtags(); renderClaimManager(); renderIam();
       });
-      tag.appendChild(n); tag.appendChild(rm);
+      tag.appendChild(text); tag.appendChild(rm);
       list.appendChild(tag);
+    });
+  }
+
+  function accountLabel(account) {
+    const display = account?.display_name || 'Member';
+    const email = account?.account_email || account?.email || '';
+    return email && email.toLowerCase() !== display.toLowerCase()
+      ? `${display} · ${email}`
+      : display;
+  }
+
+  function renderClaimManager() {
+    const c = document.getElementById('member-claim-manager');
+    if (!c) return;
+    c.innerHTML = '';
+    const g = cgState.editId ? groups.find(x=>x.id===cgState.editId) : null;
+    if (!g || !g.remoteTripId || !isGroupOwner(g)) return;
+    const accounts = (g.authMembers || []).filter(m => m.status !== 'declined');
+    const claims = g.memberClaims || [];
+    const claimedByName = new Map(claims.filter(m => m.claimed_by_user).map(m => [(m.name || '').toLowerCase(), m.claimed_by_user]));
+    const claimedByUser = new Map(claims.filter(m => m.claimed_by_user).map(m => [m.claimed_by_user, m.name]));
+    const joinedCount = (cgState.members || []).filter(name => claimedByName.has(name.toLowerCase())).length;
+    const optionsFor = (selectedUserId='') => ['<option value="">Not joined / unassigned</option>'].concat(accounts.map(account => {
+      const currentName = claimedByUser.get(account.user_id);
+      const note = currentName && account.user_id !== selectedUserId ? ` (now ${currentName})` : '';
+      return `<option value="${esc(account.user_id)}" ${selectedUserId===account.user_id?'selected':''}>${esc(accountLabel(account) + note)}</option>`;
+    })).join('');
+    c.innerHTML = `
+      <div class="claim-manager">
+        <div class="sec-label" style="margin-bottom:6px;">Join status and account matching</div>
+        <div class="claim-summary">
+          <span>${joinedCount} / ${(cgState.members || []).length} names claimed</span>
+          <span>${accounts.length} account${accounts.length===1?'':'s'} joined</span>
+        </div>
+        <div class="hint" style="margin-bottom:8px;">Choose which joined account belongs to each split name. Selecting an account here moves it from any previous name.</div>
+        ${(cgState.members || []).map(name => {
+          const selectedUserId = claimedByName.get(name.toLowerCase()) || '';
+          return `
+            <div class="claim-row">
+              <div class="claim-account">
+                <div class="claim-name">${esc(name)}</div>
+                <div class="claim-meta">${selectedUserId ? 'Joined' : 'Not joined yet'}</div>
+              </div>
+              <select class="claim-select" data-claim-name="${esc(name)}" data-current-user="${esc(selectedUserId)}">${optionsFor(selectedUserId)}</select>
+            </div>`;
+        }).join('')}
+      </div>`;
+    c.querySelectorAll('[data-claim-name]').forEach(sel=>{
+      sel.addEventListener('change', ()=>{
+        const nextUser = sel.value;
+        const currentUser = sel.dataset.currentUser;
+        if (nextUser) assignMemberClaim(g, nextUser, sel.dataset.claimName);
+        else if (currentUser) assignMemberClaim(g, currentUser, '');
+        else renderClaimManager();
+      });
     });
   }
 
@@ -4972,6 +5348,7 @@
         obj.creatorName=groups[idx].creatorName;
         obj.joinedUserId=groups[idx].joinedUserId;
         obj.authMembers=groups[idx].authMembers||[];
+        obj.memberClaims=groups[idx].memberClaims||[];
         groups[idx]=obj;
         if (obj.remoteTripId) publishGroupOnline(obj,false).catch(()=>{});
       }
@@ -5042,6 +5419,8 @@
     const liveChip = document.getElementById('g-live-chip');
     if (liveChip) liveChip.innerHTML = `<span></span> ${g.remoteTripId ? 'Live' : 'Local'} · ${g.members.length}`;
     document.getElementById('g-title').textContent=g.name;
+    const heroShare = document.getElementById('g-hero-share');
+    if (heroShare) heroShare.textContent = g.remoteTripId ? 'Share' : 'Share';
     const addQuick = document.getElementById('g-add-quick');
     if (addQuick) addQuick.textContent = cfg.addLabel;
     const editBtn = document.getElementById('g-edit');
@@ -5059,6 +5438,7 @@
       const sp=document.createElement('span'); sp.textContent=name;
       bub.appendChild(a); bub.appendChild(sp); bb.appendChild(bub);
     });
+    bindShare(g);
 
     // my balance banner
     const net=balances(g);
@@ -5098,12 +5478,11 @@
     document.getElementById('g-meta').textContent=`Mahjong session · ${g.members.length} players · ${mahjongExpenses(g).length} payouts · Settlement ${displayFmt(groupTotalSpent(g),g)}`;
     setDetailTabs([
       ['mahjong', 'Calculator'],
-      ['expenses', 'History'],
       ['balances', 'Balances'],
       ['settle', 'Settle'],
     ]);
     renderMahjong(g);
-    renderMahjongHistory(g);
+    document.getElementById('tp-expenses').innerHTML = '';
     renderBalances(g);
     renderSettle(g);
   }
@@ -5130,7 +5509,7 @@
 
   function setTab(name) {
     const g = getGroup();
-    if (g && groupKind(g) === 'mahjong' && !['mahjong','expenses','balances','settle'].includes(name)) name = 'mahjong';
+    if (g && groupKind(g) === 'mahjong' && !['mahjong','balances','settle'].includes(name)) name = 'mahjong';
     if (g && groupKind(g) !== 'mahjong' && name === 'mahjong') name = 'expenses';
     document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.tab===name));
     document.querySelectorAll('.tab-pane').forEach(p=>p.classList.toggle('on',p.id===`tp-${name}`));
@@ -5187,7 +5566,7 @@
         const n=e.splitAmong.length;
         const me=g.iAm;
         const myShare=me&&e.splitAmong.includes(me)
-          ? splitEvenly(e.cnyFen,e.splitAmong)[me]||0
+          ? expenseShares(e)[me]||0
           : 0;
         const splitLabel=e.splitAmong.length===g.members.length?'Everyone':e.splitAmong.join(', ');
         const title = e.description||e.category;
@@ -5223,11 +5602,12 @@
           save(); renderGroup(g); setTab('expenses');
         });
 
-        row.querySelector('.del-exp-btn').addEventListener('click', (ev)=>{
+        row.querySelector('.del-exp-btn').addEventListener('click', async (ev)=>{
           ev.stopPropagation();
           if (confirm(`Delete "${e.description||e.category}"?`)) {
             g.expenses=g.expenses.filter(x=>x.id!==e.id);
-            deleteExpenseOnline(g,e.id);
+            try { await deleteExpenseOnline(g,e.id); }
+            catch(err) { alert(`Could not delete this expense online:\n${err.message}`); }
             save(); renderGroup(g); setTab('expenses');
           }
         });
@@ -5278,11 +5658,12 @@
             patchExpenseArchiveOnline(g,e.id,null);
             save(); renderGroup(g); setTab('expenses');
           });
-          row.querySelector('.del-exp-btn').addEventListener('click', (ev)=>{
+          row.querySelector('.del-exp-btn').addEventListener('click', async (ev)=>{
             ev.stopPropagation();
             if (confirm(`Delete "${e.description||e.category}"?`)) {
               g.expenses=g.expenses.filter(x=>x.id!==e.id);
-              deleteExpenseOnline(g,e.id);
+              try { await deleteExpenseOnline(g,e.id); }
+              catch(err) { alert(`Could not delete this expense online:\n${err.message}`); }
               save(); renderGroup(g); setTab('expenses');
             }
           });
@@ -5326,12 +5707,13 @@
         </div>`;
     }).join('');
     c.querySelectorAll('.del-mj-exp').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
+      btn.addEventListener('click', async ()=>{
         const exp = g.expenses.find(e=>e.id===btn.dataset.id);
         if (!exp) return;
         if (!confirm(`Delete "${exp.description || 'Mahjong entry'}"?`)) return;
         g.expenses = g.expenses.filter(e=>e.id!==exp.id);
-        deleteExpenseOnline(g, exp.id);
+        try { await deleteExpenseOnline(g, exp.id); }
+        catch(err) { alert(`Could not delete this expense online:\n${err.message}`); }
         save();
         renderGroup(g);
         setTab('expenses');
@@ -5393,6 +5775,15 @@
     };
   }
 
+  function defaultMahjongMeal(members) {
+    return {
+      item:'',
+      payer:members[0] || '',
+      amountStr:'',
+      split:[],
+    };
+  }
+
   function startMahjongWizard(g) {
     const members = [...(g.members || [])].sort();
     if (members.length < 4) {
@@ -5405,7 +5796,7 @@
       potCount:1,
       includeMeal:false,
       pots:[defaultMahjongPot(members)],
-      meal:{ payer:members[0] || '', amountStr:'', split:[...members] },
+      meals:[defaultMahjongMeal(members)],
     };
     renderMahjong(g);
   }
@@ -5427,6 +5818,19 @@
     return mjWizard.potCount + (mjWizard.includeMeal ? 1 : 0) + 1;
   }
 
+  function mahjongWizardMeals(g) {
+    const members = [...(g.members || [])].sort();
+    if (!Array.isArray(mjWizard.meals)) {
+      mjWizard.meals = mjWizard.meal ? [{...defaultMahjongMeal(members), ...mjWizard.meal}] : [defaultMahjongMeal(members)];
+    }
+    if (!mjWizard.meals.length) mjWizard.meals.push(defaultMahjongMeal(members));
+    mjWizard.meals.forEach(meal => {
+      if (!meal.payer) meal.payer = members[0] || '';
+      if (!Array.isArray(meal.split)) meal.split = [];
+    });
+    return mjWizard.meals;
+  }
+
   function mahjongWizardReview(g) {
     const ccy = g.baseCurrency || DEFAULT_BASE_CURRENCY;
     const potRows = mjWizard.pots.map((pot,i) => {
@@ -5446,12 +5850,15 @@
           <strong class="num">${fmt(Math.max(winnerTotal, loserTotal),ccy)}</strong>
         </div>`;
     }).join('');
-    const mealAmount = parseAmt(mjWizard.meal.amountStr || '');
-    const mealRow = mjWizard.includeMeal ? `
-      <div class="mj-review-row">
-        <span>Meal: <strong>${esc(mjWizard.meal.payer)}</strong> paid, split by ${mjWizard.meal.split.length} people</span>
-        <strong class="num">${fmt(mealAmount,ccy)}</strong>
-      </div>` : '';
+    const mealRow = mjWizard.includeMeal ? mahjongWizardMeals(g).map((meal,i) => {
+      const mealAmount = parseAmt(meal.amountStr || '');
+      const label = meal.item || `Meal item ${i+1}`;
+      return `
+        <div class="mj-review-row">
+          <span>${esc(label)}: <strong>${esc(meal.payer)}</strong> paid, split by ${meal.split.length} people</span>
+          <strong class="num">${fmt(mealAmount,ccy)}</strong>
+        </div>`;
+    }).join('') : '';
     return `${potRows}${mealRow}`;
   }
 
@@ -5535,20 +5942,33 @@
         </div>
         <div class="hint">Each leg can be one player plus up to 3 partners. A person can only be in one leg. Winner totals must match loser totals. Leave both sides empty for a no-score pot.</div>`;
     } else if (step !== finalStep) {
-      const meal = mjWizard.meal;
-      const splitChips = members.map(n=>`
-        <button class="mj-chip ${meal.split.includes(n)?'winner':''}" type="button" data-mj-meal-split="${esc(n)}">${esc(n)}</button>`).join('');
+      const meals = mahjongWizardMeals(g);
+      const mealCards = meals.map((meal,mealIndex) => {
+        const splitChips = members.map(n=>`
+          <button class="mj-chip ${meal.split.includes(n)?'winner':''}" type="button" data-mj-meal-index="${mealIndex}" data-mj-meal-split="${esc(n)}">${esc(n)}</button>`).join('');
+        return `
+          <div class="mj-item-card">
+            <div class="mj-item-head">
+              <div class="mj-item-title">Item ${mealIndex+1}</div>
+              ${meals.length > 1 ? `<button class="del-btn" type="button" data-mj-remove-meal="${mealIndex}" title="Remove item">×</button>` : ''}
+            </div>
+            <div class="mj-grid-2">
+              <div class="mj-field"><label>Item name</label><input data-mj-meal-item="${mealIndex}" placeholder="Dinner, drinks, dessert" value="${esc(meal.item || '')}"></div>
+              <div class="mj-field"><label>Who paid?</label><select data-mj-meal-payer="${mealIndex}">${options}</select></div>
+            </div>
+            <div class="mj-field"><label>Price (${esc(ccy)})</label><input data-mj-meal-amt="${mealIndex}" inputmode="decimal" placeholder="0.00" value="${esc(meal.amountStr || '')}"></div>
+            <div class="mj-item-count">${meal.split.length} sharing</div>
+            <div class="mj-chip-row">${splitChips}</div>
+          </div>`;
+      }).join('');
       body = `
-        <div class="mj-grid-2">
-          <div class="mj-field"><label>Who paid meal?</label><select id="mj-w-meal-payer">${options}</select></div>
-          <div class="mj-field"><label>Meal amount (${esc(ccy)})</label><input id="mj-w-meal-amt" inputmode="decimal" placeholder="0.00" value="${esc(meal.amountStr)}"></div>
-        </div>
-        <div class="sec-label">Who ate / shares meal?</div>
-        <div class="mj-chip-row">${splitChips}</div>`;
+        <div class="sec-label">Meal items</div>
+        ${mealCards}
+        <button class="btn btn-ghost btn-sm" id="mj-add-meal-item" type="button" style="width:auto;">Add item</button>`;
     } else {
       body = `
         <div class="mj-review-list">${mahjongWizardReview(g)}</div>
-        <div class="hint">Saving adds Mahjong transfers and, if included, one meal expense. The Balances and Settle tabs then calculate who owes who.</div>`;
+        <div class="hint">Saving adds Mahjong transfers and, if included, one meal expense per item. The Balances and Settle tabs then calculate who owes who.</div>`;
     }
 
     c.innerHTML = `
@@ -5637,17 +6057,44 @@
         renderMahjongWizard(g);
       });
     } else if (step !== finalStep) {
-      const meal = mjWizard.meal;
-      const payer = document.getElementById('mj-w-meal-payer');
-      if (payer) payer.value = meal.payer;
-      payer?.addEventListener('change', e=>{ meal.payer = e.target.value; });
-      document.getElementById('mj-w-meal-amt')?.addEventListener('input', e=>{ meal.amountStr = e.target.value; });
+      const meals = mahjongWizardMeals(g);
+      c.querySelectorAll('[data-mj-meal-payer]').forEach(sel=>{
+        const meal = meals[parseInt(sel.dataset.mjMealPayer,10)];
+        if (!meal) return;
+        sel.value = meal.payer;
+        sel.addEventListener('change', e=>{ meal.payer = e.target.value; });
+      });
+      c.querySelectorAll('[data-mj-meal-item]').forEach(inp=>{
+        inp.addEventListener('input', e=>{
+          const meal = meals[parseInt(e.target.dataset.mjMealItem,10)];
+          if (meal) meal.item = e.target.value;
+        });
+      });
+      c.querySelectorAll('[data-mj-meal-amt]').forEach(inp=>{
+        inp.addEventListener('input', e=>{
+          const meal = meals[parseInt(e.target.dataset.mjMealAmt,10)];
+          if (meal) meal.amountStr = e.target.value;
+        });
+      });
       c.querySelectorAll('[data-mj-meal-split]').forEach(btn=>{
         btn.addEventListener('click', ()=>{
+          const meal = meals[parseInt(btn.dataset.mjMealIndex,10)];
+          if (!meal) return;
           const n = btn.dataset.mjMealSplit;
           meal.split = meal.split.includes(n) ? meal.split.filter(x=>x!==n) : [...meal.split,n];
           renderMahjongWizard(g);
         });
+      });
+      c.querySelectorAll('[data-mj-remove-meal]').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          if (meals.length <= 1) return;
+          meals.splice(parseInt(btn.dataset.mjRemoveMeal,10), 1);
+          renderMahjongWizard(g);
+        });
+      });
+      document.getElementById('mj-add-meal-item')?.addEventListener('click', ()=>{
+        meals.push(defaultMahjongMeal(members));
+        renderMahjongWizard(g);
       });
     }
     document.getElementById('mj-w-back')?.addEventListener('click', ()=>{
@@ -5699,13 +6146,15 @@
     try {
       if (mjWizard.step === 0) {
         syncMahjongWizardPots(g);
-        if (mjWizard.meal.split.length === 0) mjWizard.meal.split = [...(g.members || [])];
       } else if (mjWizard.step <= mjWizard.potCount) {
         validateMahjongPot(g,mjWizard.pots[mjWizard.step-1], mjWizard.step-1);
       } else if (mjWizard.step !== mahjongWizardFinalStep()) {
-        if (!mjWizard.meal.payer) throw new Error('Pick who paid for the meal.');
-        if (!parseAmt(mjWizard.meal.amountStr || '')) throw new Error('Enter the meal amount.');
-        if (!mjWizard.meal.split.length) throw new Error('Pick at least one person to split the meal.');
+        mahjongWizardMeals(g).forEach((meal,index) => {
+          const label = meal.item || `meal item ${index+1}`;
+          if (!meal.payer) throw new Error(`Pick who paid for ${label}.`);
+          if (!parseAmt(meal.amountStr || '')) throw new Error(`Enter the price for ${label}.`);
+          if (!meal.split.length) throw new Error(`Pick at least one person sharing ${label}.`);
+        });
       } else {
         saveMahjongWizard(g);
         return;
@@ -5726,7 +6175,7 @@
       source: 'meal',
       category: 'Meal',
       categoryIcon: '🍽️',
-      description: 'Mahjong meal money',
+      description: meal.item ? `Mahjong meal: ${meal.item}` : 'Mahjong meal money',
       originalAmount,
       currency: ccy,
       cnyFen,
@@ -5765,7 +6214,7 @@
     try {
       const ccy = g.baseCurrency || DEFAULT_BASE_CURRENCY;
       const exps = mjWizard.pots.flatMap((pot,index) => createMahjongPotExpenses(g,pot,index,ccy));
-      if (mjWizard.includeMeal) exps.push(createMealExpense(g, mjWizard.meal));
+      if (mjWizard.includeMeal) exps.push(...mahjongWizardMeals(g).map(meal => createMealExpense(g, meal)));
       mjWizard.open = false;
       if (!exps.length) {
         renderMahjong(g);
@@ -5838,12 +6287,13 @@
 
     document.getElementById('mj-start-wizard')?.addEventListener('click', ()=>startMahjongWizard(g));
     c.querySelectorAll('.del-mj-exp').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
+      btn.addEventListener('click', async ()=>{
         const exp = g.expenses.find(e=>e.id===btn.dataset.id);
         if (!exp) return;
         if (!confirm(`Delete "${exp.description || 'Mahjong transfer'}"?`)) return;
         g.expenses = g.expenses.filter(e=>e.id!==exp.id);
-        deleteExpenseOnline(g, exp.id);
+        try { await deleteExpenseOnline(g, exp.id); }
+        catch(err) { alert(`Could not delete this expense online:\n${err.message}`); }
         save();
         renderGroup(g);
         setTab('mahjong');
@@ -5885,7 +6335,7 @@
       return `
         <div class="manager-row">
           <div>
-            <div class="manager-name">${esc(m.display_name || 'Member')}</div>
+            <div class="manager-name">${esc(accountLabel(m))}</div>
             <div class="manager-role">${esc(label)}</div>
           </div>
           ${isOwner ? '' : `<button class="btn btn-ghost btn-sm js-role-toggle" data-user-id="${esc(m.user_id)}" data-next-role="${m.role === 'manager' ? 'member' : 'manager'}">${m.role === 'manager' ? 'Remove manager' : 'Make manager'}</button>`}
@@ -5896,7 +6346,7 @@
 
   function bindShare(g) {
     document.querySelector('.js-online-publish')?.addEventListener('click', ()=>publishGroupOnline(g));
-    document.querySelector('.js-share')?.addEventListener('click', ()=>doShare(g.id));
+    document.querySelectorAll('.js-share').forEach(btn=>{ btn.onclick = ()=>doShare(g.id); });
     document.querySelector('.js-archive-group')?.addEventListener('click', ()=>setGroupArchived(g, groupState(g) !== 'past'));
     document.querySelectorAll('.js-role-toggle').forEach(btn=>{
       btn.addEventListener('click', ()=>setMemberRole(g, btn.dataset.userId, btn.dataset.nextRole));
@@ -5978,6 +6428,36 @@
     }
   }
 
+  async function assignMemberClaim(g, userId, memberName) {
+    if (!g?.remoteTripId || !userId) return;
+    if (!isGroupOwner(g)) {
+      alert('Only the group owner can reassign accounts to names.');
+      return;
+    }
+    try {
+      await db('rpc/assign_trip_member_claim', {
+        method: 'POST',
+        body: { p_trip_id: g.remoteTripId, p_user_id: userId, p_member_name: memberName || null },
+      });
+      await syncGroupOnline(g,true);
+      const selected = memberName || null;
+      if (userId === authSession?.user?.id && selected) {
+        g.iAm = selected;
+        profile.name = selected;
+        saveProfile();
+      }
+      cgState.members = [...(g.members || [])];
+      cgState.memberClaims = [...(g.memberClaims || [])];
+      renderMtags();
+      renderClaimManager();
+      renderIam();
+      saveAllAppData();
+    } catch(err) {
+      alert(`Could not reassign this account:\n${err.message}`);
+      renderClaimManager();
+    }
+  }
+
   async function publishGroupOnline(g, showAlert=true) {
     if (!onlineReady()) {
       alert('Supabase is not configured yet. Paste your project URL and anon key into SUPABASE_URL and SUPABASE_ANON_KEY in index.html.');
@@ -5995,7 +6475,7 @@
       g.remoteShareCode = row.share_code;
       g.joinedUserId = authSession.user.id;
       g.creatorUserId = g.creatorUserId || authSession.user.id;
-      g.authMembers = g.authMembers || [{ user_id: authSession.user.id, display_name: profile.name || 'Owner', role: 'owner' }];
+      g.authMembers = g.authMembers || [{ user_id: authSession.user.id, display_name: profile.name || 'Owner', account_email: authSession.user.email || null, role: 'owner' }];
 
       if (!wasOnline) {
         const created = await db('rpc/create_trip_with_membership', {
@@ -6008,6 +6488,7 @@
             p_base_currency: row.base_currency,
             p_fx_rates: row.fx_rates,
             p_display_name: remoteTripMemberRow(g).display_name,
+            p_account_email: remoteTripMemberRow(g).account_email,
             p_created_by_device: row.created_by_device,
           },
         });
@@ -6049,6 +6530,14 @@
           prefer:'resolution=merge-duplicates',
           body: members,
         });
+      }
+      if (wasOnline && Array.isArray(g.memberClaims)) {
+        const keep = new Set((g.members || []).map(name => name.toLowerCase()));
+        const removed = g.memberClaims.filter(m => m?.id && !keep.has((m.name || '').toLowerCase()));
+        await Promise.all(removed.map(m => db(`members?id=eq.${encodeURIComponent(m.id)}`, {
+          method:'DELETE',
+          prefer:'return=minimal',
+        })));
       }
 
       const expenses = (g.expenses||[]).map(e=>remoteExpenseRow(g,e));
@@ -6112,13 +6601,10 @@
       g.creatorUserId = g.creatorUserId || trip.created_by_user || null;
       g.finalizedAt = trip.finalized_at || undefined;
       g.authMembers = authMembers || [];
+      g.memberClaims = members || [];
+      if ((members || []).length) g.members = members.map(m=>m.name).filter(Boolean);
 
-      const names = new Set(g.members||[]);
-      (members||[]).forEach(m=>{ if (m.name && !names.has(m.name)) { names.add(m.name); g.members.push(m.name); } });
-
-      const byId = new Map((g.expenses||[]).map(e=>[e.id,e]));
-      (expenses||[]).forEach(r=>byId.set(r.id, expenseFromRemote(r)));
-      g.expenses = [...byId.values()].sort((a,b)=>(a.createdAt||'').localeCompare(b.createdAt||''));
+      g.expenses = (expenses||[]).map(expenseFromRemote).sort((a,b)=>(a.createdAt||'').localeCompare(b.createdAt||''));
 
       const paymentsById = new Map((g.payments||[]).map(p=>[p.id,p]));
       (payments||[]).forEach(r=>paymentsById.set(r.id, paymentFromRemote(r)));
@@ -6134,33 +6620,53 @@
   }
 
   async function chooseJoinMemberName(code) {
+    let rows = [];
     let options = [];
     try {
-      const rows = await db('rpc/preview_trip_join_options', {
+      rows = await db('rpc/preview_trip_join_options', {
         method: 'POST',
         body: { p_share_code: code },
       });
-      options = (rows || []).map(r => r.name).filter(Boolean);
+      options = (rows || []).filter(r => r.is_available !== false).map(r => r.name).filter(Boolean);
     } catch(e) {}
+    if ((rows || []).length && !options.length) {
+      alert('All names in this split have already been claimed. Ask the group owner to release or reassign a name in group settings.');
+      return '';
+    }
     if (!options.length) {
       const fallback = profile.name || authSession?.user?.email?.split('@')[0] || 'Member';
       return (prompt('Who are you in this split?', fallback) || '').trim();
     }
-    const message = [
-      'Who are you in this split?',
-      '',
-      ...options.map((name, idx) => `${idx + 1}. ${name}`),
-      '',
-      'Enter the number or exact name. Your account will be linked to that member.'
-    ].join('\n');
-    const answer = (prompt(message, '1') || '').trim();
-    if (!answer) return '';
-    const picked = /^\d+$/.test(answer) ? options[Number(answer) - 1] : options.find(n => n.toLowerCase() === answer.toLowerCase());
-    if (!picked) {
-      alert('Please pick one of the member names added by the owner.');
-      return '';
-    }
-    return picked;
+    return showJoinNamePicker(options);
+  }
+
+  function showJoinNamePicker(options) {
+    return new Promise(resolve => {
+      const backdrop = document.createElement('div');
+      backdrop.className = 'join-picker-backdrop';
+      const names = options.map(name => `
+        <button class="join-name-btn" type="button" data-join-name="${esc(name)}">
+          <span class="av-sm" style="background:${avColor(name)}">${esc(avInit(name))}</span>
+          <span>${esc(name)}</span>
+        </button>`).join('');
+      backdrop.innerHTML = `
+        <div class="join-picker" role="dialog" aria-modal="true" aria-labelledby="join-picker-title">
+          <div class="join-picker-title" id="join-picker-title">Who are you in this split?</div>
+          <div class="join-picker-sub">Tap your name. Your account will be linked to that member, so the group will not create duplicate people.</div>
+          <div class="join-name-list">${names}</div>
+          <button class="btn btn-ghost" type="button" id="join-picker-cancel">Cancel</button>
+        </div>`;
+      const close = value => {
+        backdrop.remove();
+        resolve(value || '');
+      };
+      backdrop.querySelectorAll('[data-join-name]').forEach(btn=>{
+        btn.addEventListener('click', ()=>close(btn.dataset.joinName));
+      });
+      backdrop.querySelector('#join-picker-cancel')?.addEventListener('click', ()=>close(''));
+      backdrop.addEventListener('click', e=>{ if (e.target === backdrop) close(''); });
+      document.body.appendChild(backdrop);
+    });
   }
 
   async function joinOnlineTrip(codeOverride=null) {
@@ -6176,10 +6682,11 @@
       if (!joinName) return;
       const tripRows = await db('rpc/join_trip_by_code', {
         method:'POST',
-        body:{ p_share_code:code, p_display_name:joinName },
+        body:{ p_share_code:code, p_display_name:joinName, p_account_email: authSession?.user?.email || null },
       });
       const trip = tripRows?.[0];
       if (!trip) throw new Error('No online record found for that code.');
+      const tripName = trip.name || trip.trip_name;
 
       let g = groups.find(x=>x.remoteTripId===trip.id);
       if (!g) {
@@ -6190,7 +6697,7 @@
           joinedUserId: authSession.user.id,
           creatorUserId: trip.created_by_user || null,
           kind: trip.kind ? normaliseKind(trip.kind) : (currentApp || urlTripKind()),
-          name: trip.name,
+          name: tripName,
           emoji: trip.emoji || '🌏',
           coverPhoto: trip.cover_photo || null,
           members: [],
@@ -6235,7 +6742,7 @@
         remoteTripId: trip.id,
         remoteShareCode: trip.share_code,
         joinedUserId: authSession.user.id,
-        name: trip.name,
+        name: trip.name || trip.trip_name,
         emoji: trip.emoji || '🌏',
         coverPhoto: trip.cover_photo || null,
         kind: trip.kind ? normaliseKind(trip.kind) : (knownRemoteKinds.get(trip.id) || null),
@@ -6307,12 +6814,12 @@
     }).catch(()=>{});
   }
 
-  function deleteExpenseOnline(g,expenseId) {
+  async function deleteExpenseOnline(g,expenseId) {
     if (!onlineReady() || !g.remoteTripId || !isSignedIn()) return;
-    db(`expenses?id=eq.${encodeURIComponent(expenseId)}`, {
+    await db(`expenses?trip_id=eq.${encodeURIComponent(g.remoteTripId)}&id=eq.${encodeURIComponent(expenseId)}`, {
       method:'DELETE',
       prefer:'return=minimal',
-    }).catch(()=>{});
+    });
   }
 
   function pushPaymentOnline(g,p) {
@@ -6713,7 +7220,7 @@
     { title:'What was it?',          sub:'Give it a name (optional)' },
     { title:'How much?',             sub:'Enter the total amount paid' },
     { title:'Who paid?',             sub:'Select the person who paid' },
-    { title:'Who is sharing?',       sub:'Select everyone splitting this expense' },
+    { title:'Who is sharing?',       sub:'Select people, or enter exact amounts for household bills' },
     { title:'Review & Confirm',      sub:'Check details before saving' },
   ];
 
@@ -6733,6 +7240,9 @@
         ccy:existing?.currency || g.baseCurrency || DEFAULT_BASE_CURRENCY,
         paidBy:existing?.paidBy || g.iAm || g.members[0] || null,
         split:existing?.splitAmong?.length ? [...existing.splitAmong] : [...g.members],
+        shareInputs: existing?.splitShares
+          ? Object.fromEntries(Object.entries(existing.splitShares).map(([name,cny]) => [name, ((fromCny(cny, existing.currency || g.baseCurrency || DEFAULT_BASE_CURRENCY, g.fxRates)||0)/100).toFixed(2).replace(/\.00$/,'')]))
+          : {},
         everyone:existing?.splitAmong?.length ? existing.splitAmong.length===g.members.length : true,
         date:existing?.date || today(),
       }
@@ -6894,6 +7404,7 @@
     const g=getGroup();
     if (!g) return;
     const minor=parseAmt(wiz.data.amtStr);
+    if (currentApp === 'general') return wizGeneralSplit(body,g,minor);
     const n=wiz.data.split.length;
     const perPerson=n>0?Math.round(minor/n):0;
 
@@ -6936,13 +7447,80 @@
     });
   }
 
+  function wizGeneralSplit(body,g,minor) {
+    const sym = SYM[wiz.data.ccy] || '$';
+    wiz.data.shareInputs = wiz.data.shareInputs || {};
+    const fixedTotal = (g.members || []).reduce((sum,name)=>sum+parseAmt(wiz.data.shareInputs[name] || ''),0);
+    const selected = [...new Set([...(wiz.data.split || []), ...(g.members || []).filter(name=>parseAmt(wiz.data.shareInputs[name] || '')>0)])];
+    wiz.data.split = selected;
+    const flexible = selected.filter(name=>!parseAmt(wiz.data.shareInputs[name] || ''));
+    const remaining = Math.max(0, minor - fixedTotal);
+    const over = fixedTotal > minor;
+    body.innerHTML=`
+      <div class="split-body">
+        <div class="split-hint" style="margin-top:0;margin-bottom:12px;text-align:left;">
+          Enter fixed amounts for people who owe a specific value. Put 0 or leave blank for people sharing the remaining ${sym}${(remaining/100).toFixed(2)}.
+        </div>
+        <div id="smembers"></div>
+        <div class="split-hint" id="split-hint" style="${over?'background:var(--red-light);color:var(--red);':''}">
+          ${over
+            ? `Fixed amounts exceed the bill by ${sym}${((fixedTotal-minor)/100).toFixed(2)}`
+            : `${sym}${(remaining/100).toFixed(2)} remaining · ${flexible.length} ${flexible.length===1?'person':'people'} sharing the rest`}
+        </div>
+      </div>`;
+    const mlist=document.getElementById('smembers');
+    g.members.forEach(name=>{
+      const row=document.createElement('div'); row.className='split-member';
+      const checked=wiz.data.split.includes(name);
+      row.appendChild(av(name,'av-sm'));
+      const nm=document.createElement('div');
+      nm.style.cssText='flex:1;font-size:15px;font-weight:600;min-width:0;';
+      nm.textContent=name;
+      const inp=document.createElement('input');
+      inp.className='share-input';
+      inp.inputMode='decimal';
+      inp.placeholder='0';
+      inp.value=wiz.data.shareInputs[name] || '';
+      const chk=document.createElement('div');
+      chk.className='chk'+(checked?' on':'');
+      chk.textContent=checked?'✓':'';
+      row.appendChild(nm); row.appendChild(inp); row.appendChild(chk);
+      chk.addEventListener('click', ()=>{
+        wiz.data.split = wiz.data.split.includes(name) ? wiz.data.split.filter(m=>m!==name) : [...wiz.data.split,name];
+        wiz.data.everyone=false;
+        wizGeneralSplit(body,g,minor);
+      });
+      row.addEventListener('click', ev=>{
+        if (ev.target === inp || ev.target === chk) return;
+        chk.click();
+      });
+      inp.addEventListener('input', ()=>{
+        wiz.data.shareInputs[name]=inp.value;
+        if (parseAmt(inp.value)>0 && !wiz.data.split.includes(name)) {
+          wiz.data.split.push(name);
+          chk.classList.add('on');
+          chk.textContent='✓';
+        }
+        wiz.data.everyone=false;
+      });
+      mlist.appendChild(row);
+    });
+  }
+
   function wizConfirm(body) {
     const g=getGroup();
     const minor=parseAmt(wiz.data.amtStr);
     const cnyFen=toCny(minor,wiz.data.ccy,g?.fxRates);
     const sym=SYM[wiz.data.ccy]||'¥';
     const splitLabel=wiz.data.split.length===(g?.members.length||0)?'Everyone':wiz.data.split.join(', ');
-    const shares=splitEvenly(cnyFen,wiz.data.split);
+    let shares={};
+    try {
+      shares = currentApp === 'general'
+        ? buildCustomShares(minor,wiz.data.ccy,g?.fxRates,wiz.data.split,wiz.data.shareInputs)
+        : splitEvenly(cnyFen,wiz.data.split);
+    } catch(e) {
+      shares = {};
+    }
     const inputMatchesDisplay = wiz.data.ccy === displayCurrency(g);
 
     const bdRows=wiz.data.split.map(name=>`
@@ -7003,7 +7581,17 @@
       }
     }
     if (s===4&&!wiz.data.paidBy) return;
-    if (s===5&&!wiz.data.split.length) { alert('Select at least one person to split with.'); return; }
+    if (s===5) {
+      if (!wiz.data.split.length) { alert('Select at least one person to split with.'); return; }
+      if (currentApp === 'general') {
+        try {
+          buildCustomShares(parseAmt(wiz.data.amtStr),wiz.data.ccy,getGroup()?.fxRates,wiz.data.split,wiz.data.shareInputs);
+        } catch(err) {
+          alert(err.message);
+          return;
+        }
+      }
+    }
     if (s===6) { doSaveExpense(); return; }
     wiz.step++;
     renderWizStep();
@@ -7016,6 +7604,15 @@
     if (!minor) return;
     const cnyFen=toCny(minor,wiz.data.ccy,g.fxRates);
     const existing = wiz.editId ? (g.expenses||[]).find(e=>e.id===wiz.editId) : null;
+    let splitShares = null;
+    if (currentApp === 'general') {
+      try {
+        splitShares = buildCustomShares(minor,wiz.data.ccy,g.fxRates,wiz.data.split,wiz.data.shareInputs);
+      } catch(err) {
+        alert(err.message);
+        return;
+      }
+    }
 
     const exp={
       id:existing?.id || uid(),
@@ -7027,6 +7624,7 @@
       cnyFen,
       paidBy:wiz.data.paidBy,
       splitAmong:[...wiz.data.split],
+      splitShares,
       date:wiz.data.date||today(),
       createdByDevice:existing?.createdByDevice || profile.id,
       createdByUser:existing?.createdByUser || authSession?.user?.id || null,
@@ -7219,7 +7817,7 @@
       cgState.members.push(name);
       if (!cgState.iAm || name.toLowerCase()===profile.name.toLowerCase()) cgState.iAm=name;
       inp.value='';
-      renderMtags(); renderIam();
+      renderMtags(); renderClaimManager(); renderIam();
     });
     document.getElementById('mname-input').addEventListener('keydown', e=>{
       if (e.key==='Enter') document.getElementById('add-mbr-btn').click();

@@ -8,6 +8,7 @@ This app uses Supabase for online shared trips with user accounts and member-onl
 2. Go to **Authentication > Providers**.
 3. Enable **Email**.
 4. Go to the email provider settings and turn **Confirm email** off if you want users to create accounts and sign in immediately.
+5. For password resets, add your app URL under **Authentication > URL Configuration > Redirect URLs**. The reset email redirects back to the app so the user can choose a new password.
 
 The app has a confirm-password field. Email verification is controlled by Supabase project settings, not by the HTML file.
 
