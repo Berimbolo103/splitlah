@@ -3145,8 +3145,8 @@
       <div class="row-gap" id="base-ccy-picker"></div>
 
       <div class="mt20"></div>
-      <div class="sec-label">Exchange Rates → CNY</div>
-      <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">How many CNY equals 1 unit of each currency</div>
+      <div class="sec-label">Exchange Rates → SGD</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">How many SGD equals 1 unit of each currency</div>
       <div class="fx-grid" id="fx-grid"></div>
 
       <div class="mt20"></div>
@@ -3341,7 +3341,7 @@
   const TRIP_EMOJIS = ['🇨🇳','🌏','✈️','🎒','🍜','🎉','🏖️','⛰️','🗺️','🏯','🌃','🎆','🍵','🥘','🚀','🎈'];
   const GENERAL_EMOJIS = ['💸','🏠','🧾','🛒','🍜','☕','🎁','🚗','👥','📦','💡','🔁'];
   const MAHJONG_EMOJIS = ['🀄','🎲','🏮','💰','🧧','♠️','♦️','♣️','♥️'];
-  const CCYS = ['CNY','SGD','USD','MYR','HKD'];
+  const CCYS = ['SGD','CNY','USD','MYR','HKD'];
   const SYM = { CNY:'¥', SGD:'S$', USD:'$', MYR:'RM', HKD:'HK$' };
   const HOUSEMATE_CATS = [
     { n:'Utilities', i:'💡' },
@@ -3489,6 +3489,7 @@
   let profile = { id:null, name:'' };
   let authSession = null;
   let syncTimer = null;
+  let currencyPatchTimer = null;
   let settleViewMode = 'min';
   let copyBillCurrency = '';
   let pendingJoinCode = null;
@@ -3512,7 +3513,7 @@
 
   let cgState = {
     editId: null, kind:'travel', emoji:'🌏', members:[],
-    baseCcy:DEFAULT_BASE_CURRENCY, fx:{...DEFAULT_FX_RATES}, iAm:null, coverPhoto:null, coverUpload:null
+    baseCcy:DEFAULT_BASE_CURRENCY, fx:{...DEFAULT_FX_RATES}, sgdRates:null, iAm:null, coverPhoto:null, coverUpload:null
   };
 
   // ── STORAGE ──
@@ -3940,6 +3941,43 @@
     if (ccy === 'CNY') return cnyFen;
     const rate = fx?.[ccy] || 1;
     return Math.round((cnyFen/100)/rate*100);
+  }
+
+  function positiveRate(value, fallback=1) {
+    const n = typeof value === 'number' ? value : parseFloat(value);
+    return isFinite(n) && n > 0 ? n : fallback;
+  }
+
+  function sgdRatesFromFx(fx={}) {
+    const merged = { ...DEFAULT_FX_RATES, ...(fx || {}) };
+    const cnyPerSgd = positiveRate(merged.SGD, DEFAULT_FX_RATES.SGD);
+    const out = {};
+    CCYS.filter(c => c !== MAIN_CURRENCY).forEach(c => {
+      out[c] = c === 'CNY'
+        ? 1 / cnyPerSgd
+        : positiveRate(merged[c], DEFAULT_FX_RATES[c] || cnyPerSgd) / cnyPerSgd;
+    });
+    return out;
+  }
+
+  function fxFromSgdRates(sgdRates={}) {
+    const defaults = sgdRatesFromFx(DEFAULT_FX_RATES);
+    const cnyPerSgd = 1 / positiveRate(sgdRates.CNY, defaults.CNY);
+    const out = { ...DEFAULT_FX_RATES, SGD: cnyPerSgd };
+    CCYS.filter(c => c !== MAIN_CURRENCY && c !== 'CNY').forEach(c => {
+      out[c] = positiveRate(sgdRates[c], defaults[c] || 1) * cnyPerSgd;
+    });
+    return out;
+  }
+
+  function rateInputValue(value) {
+    const n = positiveRate(value, 0);
+    return n ? Number(n.toFixed(4)).toString() : '';
+  }
+
+  function syncCgFxFromSgdRates() {
+    cgState.sgdRates = { ...sgdRatesFromFx(cgState.fx), ...(cgState.sgdRates || {}) };
+    cgState.fx = fxFromSgdRates(cgState.sgdRates);
   }
 
   function displayCurrency(g) {
@@ -5115,12 +5153,14 @@
       return;
     }
     if (grp) {
+      const fx = { ...DEFAULT_FX_RATES, ...grp.fxRates };
       cgState = {
         editId, kind:groupKind(grp), emoji:grp.emoji||'🌏',
         members:[...(grp.members||[])],
         memberClaims:[...(grp.memberClaims||[])],
         baseCcy:MAIN_CURRENCY,
-        fx:{...DEFAULT_FX_RATES, ...grp.fxRates},
+        fx,
+        sgdRates:sgdRatesFromFx(fx),
         iAm:grp.iAm||null,
         coverPhoto:grp.coverPhoto||null,
         coverUpload:null,
@@ -5129,9 +5169,10 @@
       document.getElementById('gname').value=grp.name||'';
     } else {
       const t = appConfig(createKind);
+      const fx = { ...DEFAULT_FX_RATES };
       cgState = {
         editId:null, kind:createKind, emoji:t.emoji, members:[], memberClaims:[],
-        baseCcy:MAIN_CURRENCY, fx:{...DEFAULT_FX_RATES}, iAm:profile.name||null, coverPhoto:null, coverUpload:null
+        baseCcy:MAIN_CURRENCY, fx, sgdRates:sgdRatesFromFx(fx), iAm:profile.name||null, coverPhoto:null, coverUpload:null
       };
       document.getElementById('cg-title').textContent=t.createTitle;
       document.getElementById('gname').value='';
@@ -5148,6 +5189,18 @@
     p.style.display = 'none';
     const label = p.previousElementSibling;
     if (label) label.style.display = 'none';
+  }
+
+  function applyLiveCurrencyRates() {
+    if (!cgState.editId) return;
+    const g = groups.find(x => x.id === cgState.editId);
+    if (!g || !canManageGroup(g)) return;
+    g.baseCurrency = MAIN_CURRENCY;
+    g.fxRates = { ...cgState.fx };
+    g.updatedAt = new Date().toISOString();
+    save();
+    if (gid === g.id) renderGroup(g);
+    scheduleTripCurrencyPatch(g);
   }
 
   function renderCreate() {
@@ -5192,11 +5245,17 @@
     // fx rates
     const fg = document.getElementById('fx-grid');
     fg.innerHTML='';
-    CCYS.filter(c=>c!=='CNY').forEach(c=>{
+    syncCgFxFromSgdRates();
+    CCYS.filter(c=>c!==MAIN_CURRENCY).forEach(c=>{
       const item=document.createElement('div');
       item.className='fx-item';
-      item.innerHTML=`<label>1 ${SYM[c]} ${c} =</label><input class="field" type="number" inputmode="decimal" step="0.01" placeholder="? CNY" value="${cgState.fx[c]||''}">`;
-      item.querySelector('input').addEventListener('input', e=>{ cgState.fx[c]=parseFloat(e.target.value)||0; });
+      item.innerHTML=`<label>1 ${SYM[c]} ${c} =</label><input class="field" type="number" inputmode="decimal" step="0.0001" placeholder="? SGD" value="${rateInputValue(cgState.sgdRates[c])}">`;
+      item.querySelector('input').addEventListener('input', e=>{
+        const raw = e.target.value.trim();
+        cgState.sgdRates[c] = raw === '' ? '' : parseFloat(raw);
+        syncCgFxFromSgdRates();
+        applyLiveCurrencyRates();
+      });
       fg.appendChild(item);
     });
 
@@ -5306,6 +5365,7 @@
     const name=document.getElementById('gname').value.trim();
     if (!name) { alert('Please enter a group name.'); return; }
     if (!cgState.members.length) { alert('Please add at least one member.'); return; }
+    syncCgFxFromSgdRates();
     const id = cgState.editId||uid();
     let coverPhoto = cgState.coverPhoto || null;
     if (cgState.coverUpload) {
@@ -6812,6 +6872,25 @@
       prefer:'return=minimal',
       body: { kind: groupKind(g), updated_at: new Date().toISOString() },
     }).catch(()=>{});
+  }
+
+  function patchTripCurrencyOnline(g) {
+    if (!onlineReady() || !g?.remoteTripId || !isSignedIn() || !canManageGroup(g)) return;
+    db(`trips?id=eq.${encodeURIComponent(g.remoteTripId)}`, {
+      method:'PATCH',
+      prefer:'return=minimal',
+      body: {
+        base_currency: MAIN_CURRENCY,
+        fx_rates: g.fxRates || {},
+        updated_at: new Date().toISOString(),
+      },
+    }).catch(()=>{});
+  }
+
+  function scheduleTripCurrencyPatch(g) {
+    if (!g?.remoteTripId) return;
+    if (currencyPatchTimer) clearTimeout(currencyPatchTimer);
+    currencyPatchTimer = setTimeout(() => patchTripCurrencyOnline(g), 650);
   }
 
   async function deleteExpenseOnline(g,expenseId) {
